@@ -1,13 +1,35 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <form @submit="call()">
+      <button type="call">click me</button>
+    </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      wsData: ''
+    }
+  },
+  methods: {
+    call: function () {
+      setInterval(() => {
+        this.$socket.send('')
+        this.$options.sockets.onmessage = (d) => {
+          if (this.wsData !== d.data) {
+            console.log(d)
+          }
+          this.wsData = d.data
+        }
+      }, 1000)
+    }
+  },
+  created: function () {
+    this.call()
+  }
 }
 </script>
 
