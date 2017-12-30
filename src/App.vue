@@ -16,15 +16,13 @@ export default {
   },
   methods: {
     call: function () {
-      setInterval(() => {
-        this.$socket.send('')
-        this.$options.sockets.onmessage = (d) => {
-          if (this.wsData !== d.data) {
-            console.log(d)
-          }
-          this.wsData = d.data
+      this.$socket.send('')
+      this.$options.sockets.onmessage = (d) => {
+        if (this.wsData !== d.data) {
+          console.log(d)
         }
-      }, 1000)
+        this.wsData = d.data
+      }
     }
   },
   created: function () {
